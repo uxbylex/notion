@@ -11,13 +11,14 @@
 
         body{
             font-variant-caps: all-petite-caps;
+            background: transparent;
 
 
         }
 
         .widget {
             padding: 5px 5px ;
-            color: #000000;
+            color: #ffffff;
             display: flex;
             justify-content:center;
             align-items:center;
@@ -26,7 +27,7 @@
             margin: auto;
             border: 3px solid #FFFFFF;
             border-radius: 5px;
-            box-shadow: 2px 2px 1px 0px #000000;
+            box-shadow: 2px 2px 1px 0px #ffffff;
 
         }
 
@@ -92,6 +93,9 @@
 
 
 <script>
+
+
+    
 
 function dispalyGreetings(today){
         hrs = today.getHours();
@@ -166,6 +170,22 @@ function dispalyGreetings(today){
 
     dispalyWidget()
 
+
+    (function(){
+  function setBodyBackground(){
+    try{
+      const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.body.style.background = isDark ? '#191919' : '#ffffff';
+    } catch(e) {
+      document.body.style.background = '#ffffff';
+    }
+  }
+  if(window.matchMedia){
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(setBodyBackground);
+  }
+  setBodyBackground();
+})();
++
 </script>
 
 </body>

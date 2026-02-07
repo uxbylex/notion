@@ -3,15 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
 <title>Greetings Widget</title>
 <style>
-/* Reset and center all text */
+/* Base reset */
 html, body {
     margin: 0;
     padding: 0;
-    background: transparent !important;
-    text-align: center !important;
+    background: transparent;
+    text-align: center;
     font-variant-caps: all-petite-caps;
+    color: #000000; /* default text for light mode */
+}
+
+/* Dark mode for Notion */
+@media (prefers-color-scheme: dark) {
+    html, body, .widget, .greet, .date, .clock {
+        color: #ffffff; /* white text for dark mode */
+    }
 }
 
 /* Widget container */
@@ -23,44 +32,35 @@ html, body {
     max-width: 95%;
     margin: auto;
     padding: 10px;
-    border: 3px solid #ffffff;
+    border: 3px solid currentColor;
     border-radius: 5px;
-    box-shadow: 2px 2px 1px #ffffff;
-    background: transparent !important;
-    text-align: center !important;
+    box-shadow: 2px 2px 1px currentColor;
+    background: transparent;
     width: 100%;
 }
 
-/* Greeting */
-.greet {
-    font-size: 3em;
-    width: 100% !important;
-    text-align: center !important;
-    margin-bottom: 0.3em;
-}
-
-/* Date (single line, nowrap) */
-.date {
-    font-family: monospace;
+/* Greeting & Date using flex centering */
+.greet, .date {
+    display: flex;            /* makes them flex containers */
+    justify-content: center;  /* centers children */
+    width: 100%;
+    white-space: nowrap;      /* prevent wrapping */
+    overflow-x: auto;         /* scroll if text too long */
     font-size: 2em;
-    width: 100% !important;
-    text-align: center !important;
     margin-bottom: 0.3em;
-    white-space: nowrap;       /* prevent wrapping */
-    overflow-x: auto;          /* scroll if too long */
 }
 
 /* Clock */
 .clock {
-    font-family: monospace;
-    font-size: 2em;
     display: flex;
     justify-content: center;
     gap: 0.2em;
+    font-family: monospace;
+    font-size: 2em;
     width: 100%;
 }
 
-/* Individual time blocks */
+/* Clock time blocks */
 .time {
     display: inline-block;
     min-width: 20px;
@@ -71,9 +71,9 @@ html, body {
     font-size: 1em;
 }
 
-/* Mobile adjustment to fit date better */
+/* Optional mobile font adjustment */
 @media (max-width: 480px) {
-    .date {
+    .greet, .date {
         font-size: 1.2em;
     }
 }
@@ -104,7 +104,7 @@ function displayGreetings(today){
     document.getElementById("greet").innerHTML = greet;
 }
 
-// Display short date (single line)
+// Display date (short format)
 function displayDate(today){
     const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     const monthName = months[today.getMonth()];

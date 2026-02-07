@@ -3,20 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
 <title>Greetings Widget</title>
-
 <style>
-/* Reset and container */
+/* Reset and force all text to center (Notion-proof) */
 html, body {
     margin: 0;
     padding: 0;
     background: transparent !important;
-    text-align: center; /* Centers all text by default */
+    text-align: center !important;
     font-variant-caps: all-petite-caps;
 }
 
-/* Widget box */
+/* Widget container */
 .widget {
     display: flex;
     flex-direction: column;
@@ -30,24 +28,27 @@ html, body {
     box-shadow: 2px 2px 1px #ffffff;
     background: transparent !important;
     text-align: center !important;
+    width: 100%;
 }
 
-/* Text elements */
+/* Greeting */
 .greet {
     font-size: 3em;
-    width: 100%;
+    width: 100% !important;
     text-align: center !important;
     margin-bottom: 0.3em;
 }
 
+/* Date */
 .date {
     font-family: monospace;
     font-size: 2em;
-    width: 100%;
+    width: 100% !important;
     text-align: center !important;
     margin-bottom: 0.3em;
 }
 
+/* Clock */
 .clock {
     font-family: monospace;
     font-size: 2em;
@@ -57,18 +58,18 @@ html, body {
     width: 100%;
 }
 
+/* Individual time blocks */
 .time {
     display: inline-block;
     min-width: 20px;
 }
 
 .colon {
-    font-size: 1em;
     display: inline-block;
+    font-size: 1em;
 }
 </style>
 </head>
-
 <body>
 
 <div class="widget">
@@ -84,14 +85,14 @@ html, body {
 </div>
 
 <script>
-// Display greeting based on time
+// Display greeting
 function displayGreetings(today){
-    let hrs = today.getHours();
+    const hrs = today.getHours();
     let greet;
-    if (hrs < 12) greet = 'Good Morning';
-    else if (hrs <= 17) greet = 'Good Afternoon';
-    else greet = 'Good Evening';
-    document.getElementById('greet').innerHTML = greet;
+    if (hrs < 12) greet = "Good Morning";
+    else if (hrs <= 17) greet = "Good Afternoon";
+    else greet = "Good Evening";
+    document.getElementById("greet").innerHTML = greet;
 }
 
 // Display date
@@ -103,23 +104,23 @@ function displayDate(today){
     const monthName = months[today.getMonth()];
     const date = today.getDate();
     const year = today.getFullYear();
-    document.getElementById('date').innerHTML = `${dayName}, ${monthName} ${date} ${year}`;
+    document.getElementById("date").innerHTML = `${dayName}, ${monthName} ${date} ${year}`;
 }
 
 // Display clock
 function displayClock(today){
-    let hour = padZeros(twelveHour(today.getHours()));
-    let minutes = padZeros(today.getMinutes());
-    let seconds = padZeros(today.getSeconds());
-    let ampm = today.getHours() >= 12 ? " pm" : " am";
-    document.getElementById('hour').innerHTML = hour;
-    document.getElementById('min').innerHTML = minutes;
-    document.getElementById('sec').innerHTML = seconds + ampm;
+    const hour = padZeros(twelveHour(today.getHours()));
+    const min = padZeros(today.getMinutes());
+    const sec = padZeros(today.getSeconds());
+    const ampm = today.getHours() >= 12 ? " pm" : " am";
+    document.getElementById("hour").innerHTML = hour;
+    document.getElementById("min").innerHTML = min;
+    document.getElementById("sec").innerHTML = sec + ampm;
 }
 
 // Helpers
 function twelveHour(h){ return h % 12 || 12; }
-function padZeros(n){ return n < 10 ? '0'+n : n; }
+function padZeros(n){ return n < 10 ? "0"+n : n; }
 
 // Main loop
 function displayWidget(){

@@ -19,7 +19,7 @@ html, body {
 /* Dark mode for Notion */
 @media (prefers-color-scheme: dark) {
     html, body, .widget, .greet, .date, .clock {
-        color: #ffffff; /* white text for dark mode */
+        color: #ffffff;
     }
 }
 
@@ -30,24 +30,33 @@ html, body {
     justify-content: center;
     align-items: center;
     max-width: 95%;
+    min-width: 0;          /* allows children to shrink */
     margin: auto;
-    padding: 10px;
+    padding: 5px;
     border: 3px solid currentColor;
     border-radius: 5px;
     box-shadow: 2px 2px 1px currentColor;
     background: transparent;
-    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Greeting & Date using flex centering */
+/* Greeting & Date centering */
 .greet, .date {
-    display: flex;            /* makes them flex containers */
-    justify-content: center;  /* centers children */
-    width: 100%;
-    white-space: nowrap;      /* prevent wrapping */
-    overflow-x: auto;         /* scroll if text too long */
-    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    width: auto;
+    max-width: 100%;
     margin-bottom: 0.3em;
+}
+
+.greet {
+    font-size: 3em;          /* original size */
+    font-family: inherit;     /* uses body font */
+}
+
+.date {
+    font-size: 2em;          /* original size */
+    font-family: monospace;  /* original style */
 }
 
 /* Clock */
@@ -57,7 +66,7 @@ html, body {
     gap: 0.2em;
     font-family: monospace;
     font-size: 2em;
-    width: 100%;
+    width: auto;
 }
 
 /* Clock time blocks */
@@ -71,11 +80,11 @@ html, body {
     font-size: 1em;
 }
 
-/* Optional mobile font adjustment */
+/* Mobile adjustments */
 @media (max-width: 480px) {
-    .greet, .date {
-        font-size: 1.2em;
-    }
+    .greet { font-size: 2.2em; }
+    .date { font-size: 1.5em; }
+    .clock { font-size: 1.5em; }
 }
 </style>
 </head>
@@ -104,7 +113,7 @@ function displayGreetings(today){
     document.getElementById("greet").innerHTML = greet;
 }
 
-// Display date (short format)
+// Display date in short format
 function displayDate(today){
     const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     const monthName = months[today.getMonth()];
